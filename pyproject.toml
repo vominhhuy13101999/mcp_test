@@ -1,0 +1,9 @@
+[project]
+name = "modelcontextprotocol"
+version = "0.1.0"
+description = "Project to learn build MCP(Model Context Protocol) server"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastmcp>=2.2.6",
+]
