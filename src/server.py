@@ -1,6 +1,10 @@
 from fastmcp import FastMCP
 
+from news import register_news_tools
+
 mcp = FastMCP("Demo Model Context Protocol")
+
+register_news_tools(mcp)
 
 @mcp.resource("data://{name}")
 def get_greeting(name: str) -> str:
@@ -28,8 +32,6 @@ def divide(x: int, y: int) -> float:
     """
     if y == 0:
         raise ValueError("Division by zero is not allowed.")
-    
-    
     return x / y
 
 @mcp.tool()
@@ -50,7 +52,7 @@ if __name__ == "__main__":
     mcp.run(
         transport="sse",
         host="127.0.0.1",
-        port=17234,
+        port=17324,
         log_level="debug"
     )
     

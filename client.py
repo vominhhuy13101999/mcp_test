@@ -5,7 +5,7 @@ from pprint import pprint
 from fastmcp import Client
 
 # client = Client("src/server.py")
-client = Client("http://127.0.0.1:17234/sse")
+client = Client("http://127.0.0.1:17324/sse")
 
 print(client.transport)
 
@@ -28,8 +28,9 @@ async def main():
         
         while True:
             tools = await client.list_tools()
-            pprint(f"Available tools")
-            pprint(tools)
+            print(f"Available tools".center('=', 50))
+            for tool in tools:
+                print(tool)
             
             resources = await client.list_resources()
             pprint(f"Available resources: {resources}")
