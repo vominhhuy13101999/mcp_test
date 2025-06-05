@@ -1,59 +1,28 @@
-from fastmcp import FastMCP
 
-from news import register_news_tools
+def main():
+    from fastmcp import FastMCP
+    from core.config import config
+    from news import register_news_tools
+    from tools.rag import register_rag_tools
+    
+    mcp = FastMCP("Demo Model Context Protocol")
 
-mcp = FastMCP("Demo Model Context Protocol")
-
-register_news_tools(mcp)
-
-@mcp.resource("data://{name}")
-def get_greeting(name: str) -> str:
-    """
-        Get a greeting message for the given name.
-    """
-    return f"Hello, {name}!"
-
-@mcp.resource("data://product-categories")
-def get_categories() -> list[str]:
-    """Returns a list of available product categories."""
-    return ["Electronics", "Books", "Home Goods"]
-
-@mcp.tool()
-def add(x: int, y: int) -> int:
-    """
-        Add two integer numbers
-    """    
-    return sum([x, y])
-
-@mcp.tool()
-def divide(x: int, y: int) -> float:
-    """
-        Divide two integer numbers
-    """
-    if y == 0:
-        raise ValueError("Division by zero is not allowed.")
-    return x / y
-
-@mcp.tool()
-def multiply(x: int, y: int) -> int:
-    """
-        Multiply two integer numbers
-    """
-    return x * y
-
-@mcp.tool()
-def subtract(x: int, y: int) -> int:
-    """
-        Subtract two integer numbers
-    """
-    return x - y
-
-if __name__ == "__main__":
+    register_news_tools(mcp)
+    register_rag_tools(mcp)
+    
     mcp.run(
         transport="sse",
-        host="127.0.0.1",
-        port=17324,
-        log_level="debug"
+        host=config.HOST,
+        port=config.PORT,
+        log_level=config.LOG_LEVEL
     )
+
+if __name__ == "__main__":
+    from dotenv import load_dotenv
+
+    load_dotenv("../scripts/environments/.env")
+
+    main()
+    
     
     

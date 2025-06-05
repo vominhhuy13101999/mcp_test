@@ -1,4 +1,4 @@
-from typing import Any, List, Dict
+from typing import Any, Optional, List, Dict
 
 import httpx
 
@@ -12,7 +12,7 @@ if not API_KEY:
 BASE_URL = "https://newsdata.io/api/1"
 
 # Helper function to fetch news from the API with nextPage pagination
-async def fetch_crypto_news(path: str, query: str = None, max_pages: int = 1) -> List[Dict[str, Any]]:
+async def fetch_crypto_news(path: str, query: Optional[str] = None, max_pages: int = 1) -> List[Dict[str, Any]]:
     all_articles = []
     next_page = None  # Start with no page token for the first request
     
@@ -57,7 +57,7 @@ def register_news_tools(mcp: FastMCP):
         Returns:
             str: A formatted string of the latest news headlines with publication dates.
         """
-        ctx.info("Fetching latest cryptocurrency news headlines")
+        await ctx.info("Fetching latest cryptocurrency news headlines")
         articles = await fetch_crypto_news("https://newsdata.io/api/1/latest?apikey=pub_8778629f5d920f128b0179428747dda95fab9")
         headlines = "\n".join(
             f"{article['title']} (Published: {article['pubDate']})"
@@ -67,7 +67,7 @@ def register_news_tools(mcp: FastMCP):
 
     # Tool: Fetch news for a specific cryptocurrency with pagination
     @mcp.tool()
-    async def get_crypto_news(query: str, max_pages: int = 1, ctx: Context = None) -> str:
+    async def get_crypto_news(query: str, ctx: Context, max_pages: int = 1) -> str:
         """
         Fetch news articles for a specific cryptocurrency or topic with pagination support.
         
@@ -78,7 +78,7 @@ def register_news_tools(mcp: FastMCP):
         Returns:
             str: A formatted string containing news article titles, dates, and descriptions.
         """
-        ctx.info(f"Fetching news for query: {query} with max_pages: {max_pages}")
+        await ctx.info(f"Fetching news for query: {query} with max_pages: {max_pages}")
         
         print(query, max_pages)
         
