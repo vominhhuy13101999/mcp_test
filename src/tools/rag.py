@@ -178,31 +178,31 @@ def register_rag_tools(mcp: FastMCP):
         except Exception as e:
             return f"Error during semantic search: {str(e)}"
     
-    @mcp.tool()
-    async def keyword_search(query: str, ctx: Context, limit: int = 5) -> str:
-        """
-        Search for documents containing specific keywords or text.
+    # @mcp.tool()
+    # async def keyword_search(query: str, ctx: Context, limit: int = 5) -> str:
+    #     """
+    #     Search for documents containing specific keywords or text.
         
-        Arguments:
-            query (str): The search query keywords.
-            limit (int, optional): Maximum number of results to return (default: 5).
+    #     Arguments:
+    #         query (str): The search query keywords.
+    #         limit (int, optional): Maximum number of results to return (default: 5).
             
-        Returns:
-            str: A formatted string containing search results with their content.
-        """
-        await ctx.info(f"Searching for documents with keywords: {query}")
+    #     Returns:
+    #         str: A formatted string containing search results with their content.
+    #     """
+    #     await ctx.info(f"Searching for documents with keywords: {query}")
         
-        # Use text-based search
-        results = await rag_tool.text_search(query, limit=limit)
+    #     # Use text-based search
+    #     results = await rag_tool.text_search(query, limit=limit)
         
-        if not results:
-            return f"No documents found containing '{query}'."
+    #     if not results:
+    #         return f"No documents found containing '{query}'."
         
-        formatted_results = "\n\n".join([
-            f"Document ID: {result['id']}\n"
-            f"Content: {result['payload'].get('text', 'No content available')}\n"
-            f"Metadata: {', '.join([f'{k}: {v}' for k, v in result['payload'].items() if k != 'text'])}"
-            for result in results
-        ])
+    #     formatted_results = "\n\n".join([
+    #         f"Document ID: {result['id']}\n"
+    #         f"Content: {result['payload'].get('text', 'No content available')}\n"
+    #         f"Metadata: {', '.join([f'{k}: {v}' for k, v in result['payload'].items() if k != 'text'])}"
+    #         for result in results
+    #     ])
         
-        return f"Found {len(results)} documents containing '{query}':\n\n{formatted_results}"
+    #     return f"Found {len(results)} documents containing '{query}':\n\n{formatted_results}"
