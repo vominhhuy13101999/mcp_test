@@ -9,6 +9,9 @@ wheels/
 # Virtual environments
 .venv
 
+.env
+
 data/
 
+scripts/ignore/
 scripts/environments/
