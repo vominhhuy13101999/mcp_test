@@ -2,7 +2,7 @@ from fastmcp import Client
 
 async def main():
     # Connect via SSE
-    async with Client("http://localhost:17324/sse") as client:
+    async with Client("http://127.0.0.1:17324/sse") as client:
         tools = await client.list_tools()
         print(f"Available tools: {tools}")
 
