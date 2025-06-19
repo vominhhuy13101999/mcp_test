@@ -1,3 +1,7 @@
+from dotenv import load_dotenv
+
+load_dotenv("scripts/environments/.env")
+
 def create_app():
     from fastapi import FastAPI
     
@@ -19,11 +23,7 @@ app = create_app()
 if __name__ == "__main__":
     import uvicorn
     
-    from dotenv import load_dotenv
-    
     from core.config import config
-    
-    load_dotenv("../scripts/environments/.env")
 
     uvicorn.run(
         app,
